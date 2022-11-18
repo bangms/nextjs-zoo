@@ -6,7 +6,7 @@ const AnimalView = ({id}) => {
     const animal = AnimalList.filter(i => i.id === id)[0];
     // console.log(animal);
 
-    const animatedItem = useScrollFadeIn();
+    const animatedItem = useScrollFadeIn;
 
     /* ------------------------------------------------------
         
@@ -59,15 +59,19 @@ const AnimalView = ({id}) => {
     별도의 함수로 빼서 재사용이 가능하기 때문
     상태관리로직의 재사용의 특징을 활용해 다양한 커스텀훅을 만들어 사용 가능
     --------------------------------------------------------- */
-    return <>
+    return <div style={{textAlign: "center"}}>
         <h1>{animal.name}</h1>
         <div>
             {animal.image}
         </div>
-        <div style={{background: "red"}} {...animatedItem} >
-            
-        </div>
-    </>
+        <div style={{background: "red", width:"100%", height:"300px", margin: "20px auto"}} {...animatedItem} ></div>
+        <div style={{background: "orange", width:"100%", height:"300px", margin: "20px auto"}} {...animatedItem} ></div>
+        <div style={{background: "yellow", width:"100%", height:"300px", margin: "20px auto"}} {...animatedItem} ></div>
+        <div style={{background: "green", width:"100%", height:"300px", margin: "20px auto"}} {...animatedItem} ></div>
+        <div style={{background: "blue", width:"100%", height:"300px", margin: "20px auto"}} {...animatedItem} ></div>
+        <div style={{background: "indigo", width:"100%", height:"300px", margin: "20px auto"}} {...animatedItem} ></div>
+        <div style={{background: "purple", width:"100%", height:"300px", margin: "20px auto"}} {...animatedItem} ></div>
+    </div>
 }
 
 export default AnimalView;

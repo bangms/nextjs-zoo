@@ -2,7 +2,7 @@ import AnimalView from "../Components/View/AnimalView";
 import { useRouter } from "next/router";
 const AnimalID = ({animalId}) => {
   const router = useRouter();
-  console.log('loadedAnimal', animalId);
+  // console.log('loadedAnimal', animalId);
     if (router.isFallback) {
         return <h1>Loading...</h1>
     }

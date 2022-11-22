@@ -15,9 +15,9 @@ export const AnimalList = [
     {
         id: '2',
         name: '새',
-        image: <Image src={bird} alt="bird image"/>,
+        image: <Image src={bird} alt="bird image" width="100%" height="100%" />,
         desc: {
-          '나이' : 3,
+          '나이' : 3, 
           '먹는 것' : '지렁이 등',
           '등록일' : '2022/9/12'
         }

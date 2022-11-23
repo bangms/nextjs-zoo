@@ -61,11 +61,36 @@ export const useScrollFadeIn = (direction, duration, delay) => {
         const { current } = element;
         // console.log('current... ',current);
         if (entry.isIntersecting) {
-          current.style.transitionProperty = 'all';
-          current.style.transitionDuration = `${duration}s`;
-          current.style.transitionTimingFunction = 'cubic-bezier(0, 0, 0.2, 1)';
-          current.style.transitionDelay = `${delay}s`;
           current.style.opacity = 1;
+
+          current.style.WebkitTransitionProperty = 'all';
+          current.style.MozTransitionProperty = 'all';
+          current.style.msTransitionProperty = 'all';
+          current.style.OTransitionProperty = 'all';
+          current.style.transitionProperty = 'all';
+
+          current.style.WebkitTransitionDuration = `${duration}s`;
+          current.style.MozTransitionDuration = `${duration}s`;
+          current.style.msTransitionDuration = `${duration}s`;
+          current.style.OTransitionDuration = `${duration}s`;
+          current.style.transitionDuration = `${duration}s`;
+
+          current.style.WebkitTransitionTimingFunction = 'cubic-bezier(0, 0, 0.2, 1)';
+          current.style.MozTransitionTimingFunction = 'cubic-bezier(0, 0, 0.2, 1)';
+          current.style.msTransitionTimingFunction = 'cubic-bezier(0, 0, 0.2, 1)';
+          current.style.OTransitionTimingFunction = 'cubic-bezier(0, 0, 0.2, 1)';
+          current.style.transitionTimingFunction = 'cubic-bezier(0, 0, 0.2, 1)';
+
+          current.style.WebkitTransitionDelay = `${delay}s`;
+          current.style.MozTransitionDelay = `${delay}s`;
+          current.style.msTransitionDelay = `${delay}s`;
+          current.style.OTransitionDelay = `${delay}s`;
+          current.style.transitionDelay = `${delay}s`;
+
+          current.style.WebkitTransform = 'translate3d(0, 0, 0)'
+          current.style.MozTransform = 'translate3d(0, 0, 0)';
+          current.style.msTransform = 'translate3d(0, 0, 0)';
+          current.style.OTransform = 'translate3d(0, 0, 0)';
           current.style.transform = 'translate3d(0, 0, 0)';
         }
       },
@@ -76,7 +101,7 @@ export const useScrollFadeIn = (direction, duration, delay) => {
       let observer;
   
       if (element.current) {
-        observer = new IntersectionObserver(onScroll, { threshold: 0.7 });
+        observer = new IntersectionObserver(onScroll, { threshold: 0.3 });
         observer.observe(element.current);
       }
   
@@ -85,6 +110,13 @@ export const useScrollFadeIn = (direction, duration, delay) => {
   
     return {
       ref: element,
-      style: { opacity: 0, transform: handleDirection(direction) },
+      style: { 
+        opacity: 0,
+        WebkitTransform: handleDirection(direction),
+        MozTransform: handleDirection(direction),
+        msTransform: handleDirection(direction),
+        OTransform: handleDirection(direction),
+        transform: handleDirection(direction) 
+      },
     };
   };

@@ -63,6 +63,41 @@ export const useScrollFadeIn = (direction, duration, delay) => {
         if (entry.isIntersecting) {
           current.style.opacity = 1;
 
+          /*
+            모바일에서 transition 성능 저하 문제 (애니메이션 버벅거림)
+            스타일 적용 순서 (브라우저마다 다를 수 있음)
+            Styles -> Layout(객체 모양, 위치) -> Paint(color나 line 적용) -> Composite(transform, opacity)
+
+            위 순서에 따르면 ‘Layout’ 속성을 바꾸면 ‘Paint’, ‘Composite’ 순서를 거치기 때문에 성능 저하가 일어나게 됨
+            ======> 이를 Reflow 라고 함
+
+            따라서 성능을 최대로 발휘하려면 Composite 속성만 바꾸는 것이 최고의 방법임
+            근데 그거만 바꾸고 있는데 외,,?
+
+            1. 클래스 변화에 따른 스타일 변화를 원할 경우, 최대한 DOM 구조 상 끝단에 위치한 노드에 추가
+            2. 애니메이션이 들어간 엘리먼트는 가급적 position: fixed 또는 position: absolute로 지정
+            3. JS를 통해 스타일변화를 주어야 할 경우, 가급적 한번에 처리 (클래스를 통한 스타일 변화가 렌더링 속도가 더 빠름)
+            4. GPU가속 이용하기
+            will-change 속성 사용하기 (브라우저 호환성과 주의점 확인 꼭!)
+             - 엘리먼트에 어떠한 변경을 할 것인지를 미리 브라우저에 알려주는 것이 will-change 속성의 역할
+             그 변경이 시작되기 전에 적절히 최적화할 수 있음(페이지 출력에 악영향을 줄 수 있는 처리 비용을 줄일 수 있음)
+             효율적으로 엘리먼트의 변경 또는 렌더링을 처리할 수 있고 페이지는 순식간에 갱신돼 부드러운 화면 처리 가능
+             하지만 will-change는 무분별하게 사용하면 성능저하가 발생하고 결과적으로 페이지의 작동이 중단될 것
+             will-change는 성능저하뿐 아니라 바로 감지하기 어려운 사이드 이펙트를 발생시키기 때문에 사용하기 까다로운 속성
+             (원래 will-change는 보이지 않는 곳에서 브라우저에 명령하는 방법이므로 감지하지 못하는 건 당연)
+
+             너무 많은 속성이나 엘리먼트에 will-change를 사용하지 않는다
+             ex )
+              *,
+              *::before,
+              *::after {
+                will-change: all;
+              }
+
+              will-change 속성은 애니메이션이 종료되었을 때 속성 제거를 해주는 것을 권장
+
+          */
+
           current.style.WebkitTransitionProperty = 'all';
           current.style.MozTransitionProperty = 'all';
           current.style.msTransitionProperty = 'all';
@@ -92,9 +127,12 @@ export const useScrollFadeIn = (direction, duration, delay) => {
           current.style.msTransform = 'translate3d(0, 0, 0)';
           current.style.OTransform = 'translate3d(0, 0, 0)';
           current.style.transform = 'translate3d(0, 0, 0)';
+
+          // current.style.willChange = 'auto';
+          // 쓰니까 오히려 더 느림 1.5s 안쓰면 1.25s
         }
       },
-      [direction, delay, duration],
+      [delay, duration],
     );
   
     useEffect(() => {
@@ -116,7 +154,8 @@ export const useScrollFadeIn = (direction, duration, delay) => {
         MozTransform: handleDirection(direction),
         msTransform: handleDirection(direction),
         OTransform: handleDirection(direction),
-        transform: handleDirection(direction) 
+        transform: handleDirection(direction), 
+        // willChange: `transform, opacity`
       },
     };
   };

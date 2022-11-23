@@ -15,11 +15,16 @@ const AnimalID = ({animalId}) => {
 export default AnimalID;
 
 export function getServerSideProps({params: {animalId}}) {
-    // console.log(ctx);
-    return {
-        props: {
-            animalId
-        },
+    if(animalId === undefined){ 
+        return{
+            notFound : true    
+        }
+    }else{
+        return {
+            props: {
+                animalId
+            },
+        }
     }
 }
 

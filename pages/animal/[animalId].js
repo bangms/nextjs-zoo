@@ -1,13 +1,15 @@
-import AnimalView from "../Components/View/AnimalView";
+import AnimalView from "../../Components/View/AnimalView";
 import { useRouter } from "next/router";
 const AnimalID = ({animalId}) => {
   const router = useRouter();
-  // console.log('loadedAnimal', animalId);
+  console.log("여긴 언제?")
+  console.log('this.props.animalId...', animalId);
     if (router.isFallback) {
         return <h1>Loading...</h1>
+    } else {
+        return <AnimalView id={animalId} />
     }
 
-    return <AnimalView id={animalId} />
 }
 
 export default AnimalID;

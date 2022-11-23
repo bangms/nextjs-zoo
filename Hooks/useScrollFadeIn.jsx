@@ -1,3 +1,4 @@
+import { ConsoleSqlOutlined } from '@ant-design/icons';
 import { useState, useEffect, useRef, useCallback } from 'react';
   // Hook의 규칙 
   //   eslint-plugin-react-hooks (ESLint 플러그인) 을 사용한다면 아래 두 규칙을 강제(CRA에 포함)
@@ -30,10 +31,9 @@ import { useState, useEffect, useRef, useCallback } from 'react';
   //     - 클래스형 컴포넌트에서 로직을 재사용하기 위해 썼던 HOC나 render-props 같은 패턴이 가져오는 컴포넌트 트리의 불필요한 중첩을 없애줌
 
 export const useScrollFadeIn = (direction, duration, delay) => {
-  // 항상 아래에서 위로 동작
+  //(direction = 'up', duration = 1, delay = 0) 지정해 놓을 경우 항상 아래에서 위로 동작하며 duration과 delay 설정 불가능
     const element = useRef();
-    console.log('element', element);
-  
+    
     const handleDirection = (name) => {
       switch (name) {
         case 'up':
@@ -48,10 +48,18 @@ export const useScrollFadeIn = (direction, duration, delay) => {
           return;
       }
     };
+
+    useEffect(() => {
+      console.log('element...', element);
+    }, [element])
+    useEffect(()=> {
+      console.log('direction...',direction);
+    }, [direction])
   
     const onScroll = useCallback(
       ([entry]) => {
         const { current } = element;
+        // console.log('current... ',current);
         if (entry.isIntersecting) {
           current.style.transitionProperty = 'all';
           current.style.transitionDuration = `${duration}s`;
@@ -61,7 +69,7 @@ export const useScrollFadeIn = (direction, duration, delay) => {
           current.style.transform = 'translate3d(0, 0, 0)';
         }
       },
-      [delay, duration],
+      [direction, delay, duration],
     );
   
     useEffect(() => {

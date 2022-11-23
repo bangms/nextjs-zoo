@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useScrollFadeIn } from '../../hooks/useScrollFadeIn';
 import { AnimalList } from '../Data/AnimalList';
+import styles from './AnimalView.module.scss';
+import Bear from './Bear';
 
 const AnimalView = ({id}) => {
+    console.log("여기는?")
     // const animatedItem = useScrollFadeIn('up', 1, 0);
     // console.log(animatedItem);
     // const animatedItem = useScrollFadeIn(direction = 'up', duration = 1, delay = 0);
     const animatedItem = {
         0: useScrollFadeIn('up', 1, 0),
-        1: useScrollFadeIn('down', 1, 0.2),
-        2: useScrollFadeIn('left', 1, 0.3),
-        3: useScrollFadeIn('right', 1, 0.4),
-        4: useScrollFadeIn('up', 1, 0.5),
-        5: useScrollFadeIn('down', 1, 0.6),
-        6: useScrollFadeIn('up', 1, 0.7),
+        1: useScrollFadeIn('down', 1, 0.1),
+        2: useScrollFadeIn('left', 1, 0.2),
+        3: useScrollFadeIn('left', 1, 0.3),
+        4: useScrollFadeIn('up', 1, 0.4),
+        5: useScrollFadeIn('down', 1, 0.5),
+        6: useScrollFadeIn('left', 1, 0.6),
     };
-    // console.log(animal);
+
     const animal = AnimalList.filter(i => i.id === id)[0];
+    
     /* ------------------------------------------------------
         
     위와 같은 방식으로 구현하게 되면 콘솔창에 로그가 많이 찍힘
@@ -69,17 +73,28 @@ const AnimalView = ({id}) => {
     상태관리로직의 재사용의 특징을 활용해 다양한 커스텀훅을 만들어 사용 가능
     --------------------------------------------------------- */
     return <div style={{textAlign: "center", width: "100%"}}>
-        <h1>{animal.name}</h1>
-        <div>{animal.image}</div>
-        <div style={{textAlign: "center", width:"100%"}}>
-            <div {...animatedItem[0]} style={{background: "red", width:"300px", height:"300px", margin: "20px auto", transform:"translate3d(0, 50%, 0)"}}></div>
-            <div {...animatedItem[1]} style={{background: "orange", width:"300px", height:"300px", margin: "20px auto", transform:"translate3d(0, -50%, 0)"}}></div>
-            <div {...animatedItem[2]} style={{background: "yellow", width:"300px", height:"300px", margin: "20px auto", transform:"translate3d(50%, 0, 0)"}}></div>
-            <div {...animatedItem[3]} style={{background: "green", width:"300px", height:"300px", margin: "20px auto", transform:"translate3d(-50%, 0, 0)"}}></div>
-            <div {...animatedItem[4]} style={{background: "blue", width:"300px", height:"300px", margin: "20px auto", transform:"translate3d(50%, 0, 0)"}}></div>
-            <div {...animatedItem[5]} style={{background: "indigo", width:"300px", height:"300px", margin: "20px auto", transform:"translate3d(-50%, 0, 0)"}}></div>
-            <div {...animatedItem[6]} style={{background: "purple", width:"300px", height:"300px", margin: "20px auto", transform:"translate3d(50%, 0, 0)"}}></div>
-        </div>
+        {
+            id && animal
+            ?
+                id === '1' 
+                ?
+                    <Bear animal={animal} />
+                :
+                <>
+                    <h1>{animal.name && animal.name}</h1>
+                    <div className={styles.img_box}>{animal.image && animal.image}</div>
+                    <div style={{textAlign: "center", width:"100%"}}>
+                        <div {...animatedItem[0]} className={styles.animal_item}>0</div>
+                        <div {...animatedItem[1]} className={styles.animal_item}>1</div>
+                        <div {...animatedItem[2]} className={styles.animal_item}>2</div>
+                        <div {...animatedItem[3]} className={styles.animal_item}>3</div>
+                        <div {...animatedItem[4]} className={styles.animal_item}>4</div>
+                        <div {...animatedItem[5]} className={styles.animal_item}>5</div>
+                        <div {...animatedItem[6]} className={styles.animal_item}>6</div>
+                    </div>
+                </>
+            : <h1>해당하는 동물 정보가 없습니다.</h1>
+        }
     </div>
 }
 

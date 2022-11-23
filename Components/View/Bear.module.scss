@@ -1,0 +1,22 @@
+.container {
+    width: 100%;
+    background-color: beige;
+    position:relative;
+    display:block;
+    padding: 20px;
+
+    .img_box {
+        width:100%;
+        height: 500px;
+        position:relative;
+    }
+    
+    .animal_item {
+        height: 300px;
+        width: 300px;
+        margin:50px auto;
+        &:nth-child(1) {background-color: brown;}
+        &:nth-child(2) {background-color:chocolate;}
+        &:nth-child(3) {background-color:darkcyan;}
+    }
+}

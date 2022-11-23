@@ -10,7 +10,8 @@ export const AnimalList = [
         '나이' : 10,
         '먹이' : '건초, 배합사료 등',
         '등록일' : '2022/10/11'
-      }
+      },
+      video: 'Edt4Sj3o3xM'
     },
     {
         id: '2',
@@ -90,6 +91,7 @@ export const AnimalList = [
         '나이' : 5,
         '먹는 것' : '건초 등',
         '등록일' : '2021/06/13'
-      }
+      },
+      video: 'kIZLMN-Skgc'
     },
   ];

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useScrollFadeIn } from '../../hooks/useScrollFadeIn';
 import { AnimalList } from '../Data/AnimalList';
+import YoutubeVideo from '../YoutubeVideo/YoutubeVideo';
 import styles from './Bear.module.scss';
 
 const Bear = ({animal}) => {
@@ -12,6 +13,7 @@ const Bear = ({animal}) => {
     return (
         <>
         <div className={styles.container}>
+            <YoutubeVideo url={animal.video} />
             <h1>곰은?</h1>
             <div>
                 <h2>뭘 먹나요?</h2>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useScrollFadeIn } from '../../hooks/useScrollFadeIn';
 import { AnimalList } from '../Data/AnimalList';
+import YoutubeVideo from '../YoutubeVideo/YoutubeVideo';
 import styles from './AnimalView.module.scss';
 import Bear from './Bear';
 
@@ -10,13 +11,13 @@ const AnimalView = ({id}) => {
     // console.log(animatedItem);
     // const animatedItem = useScrollFadeIn(direction = 'up', duration = 1, delay = 0);
     const animatedItem = {
-        0: useScrollFadeIn('up', 1, 0),
-        1: useScrollFadeIn('down', 1, 0.1),
-        2: useScrollFadeIn('left', 1, 0.2),
-        3: useScrollFadeIn('left', 1, 0.3),
-        4: useScrollFadeIn('up', 1, 0.4),
-        5: useScrollFadeIn('down', 1, 0.5),
-        6: useScrollFadeIn('left', 1, 0.6),
+        0: useScrollFadeIn('left', 1, 0),
+        1: useScrollFadeIn('right', 1, 0.1),
+        2: useScrollFadeIn('up', 1, 0.1),
+        3: useScrollFadeIn('down', 1, 0.1),
+        4: useScrollFadeIn('up', 1, 0.1),
+        5: useScrollFadeIn('down', 1, 0.1),
+        6: useScrollFadeIn('left', 1, 0.1),
     };
 
     const animal = AnimalList.filter(i => i.id === id)[0];
@@ -84,6 +85,7 @@ const AnimalView = ({id}) => {
                     <h1>{animal.name && animal.name}</h1>
                     <div className={styles.img_box}>{animal.image && animal.image}</div>
                     <div style={{textAlign: "center", width:"100%"}}>
+                        {console.log('.............', {...animatedItem})}
                         <div {...animatedItem[0]} className={styles.animal_item}>0</div>
                         <div {...animatedItem[1]} className={styles.animal_item}>1</div>
                         <div {...animatedItem[2]} className={styles.animal_item}>2</div>
@@ -92,6 +94,10 @@ const AnimalView = ({id}) => {
                         <div {...animatedItem[5]} className={styles.animal_item}>5</div>
                         <div {...animatedItem[6]} className={styles.animal_item}>6</div>
                     </div>
+                    {
+                        animal.video &&
+                        <YoutubeVideo url={animal.video} />
+                    }
                 </>
             : <h1>해당하는 동물 정보가 없습니다.</h1>
         }
